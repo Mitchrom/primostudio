@@ -84,7 +84,7 @@ export default function Home() {
                 href="#"
                 className="text-xs font-semibold flex flex-row items-center"
               >
-                Contactez-nous
+                Contactez-nous!
                 <Image
                   src={"/icone-whatsapp-bleu.svg"}
                   alt="Icone What's App"
