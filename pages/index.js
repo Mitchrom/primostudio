@@ -1,15 +1,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
-import {
-  DivContact,
-  FootDown,
-  Footer,
-  FootLink,
-  FootUp,
-  SocialMedia,
-} from "../Components/Footer";
-import { BtnAccueil, BtnHeader, FootBtn } from "../Components/Buttons";
+import { BtnAccueil } from "../Components/Buttons";
 import { Stats } from "../Components/item/Stats";
 import { StatCard, StatContainer } from "../Components/Stats";
 import {
@@ -22,10 +14,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper";
 import "swiper/css";
 import "swiper/css/autoplay";
-import { HeaderDesktop, HeaderMobile } from "../Components/Header";
+import Header from "../Components/Header";
+import Footer from "../Components/Footer";
 import { Partenaires } from "../Components/item/Partenaires";
-
 import { request } from "./api/datocms";
+import CardRealisation from "../Components/CardRealisation";
 
 const HOMEPAGE_QUERY = `
 query MyQuery {
@@ -43,6 +36,20 @@ query MyQuery {
     bgColor {
       hex
     }
+  },
+    allRealisations {
+    photoCard {
+      url
+      alt
+    }
+    entreprise {
+      entreprise
+    }
+    secteurActivite
+    descriptif
+    services {
+      service
+    }
   }
 }
 `;
@@ -59,11 +66,10 @@ export default function Home(props) {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [ajd, setAjd] = useState(new Date());
-  const [menuClicked, setMenuClicked] = useState(false);
 
   const { data } = props;
   const cards = data.allServiceCards;
-
+  const reals = data.allRealisations;
   setTimeout(() => {
     setAjd(new Date());
   }, 1000);
@@ -79,8 +85,6 @@ export default function Home(props) {
 
   useEffect(() => {
     setMounted(true);
-    setMenuClicked(false);
-    console.log(cards);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -94,80 +98,7 @@ export default function Home(props) {
 
   return (
     <div className="dark:bg-zinc-700">
-      {/* ----------------------HEADER--------------------------- */}
-      <nav className="flex flex-row justify-center bg-slate-50 dark:bg-slate-600 shadow-lg dark:shadow-none w-full fixed z-10 h-[70px] ">
-        <div className="max-w-screen-xl flex flex-row justify-between w-full z-30 bg-slate-50 dark:bg-slate-600">
-          <div className="flex flex-row items-center pl-6">
-            <Image
-              src={"/logo-primo-studio-header.svg"}
-              alt="Logo de la société Primo-Studio"
-              width={37}
-              height={33}
-              loading="lazy"
-            />
-            <p className="font-semibold text-large mx-2">Primo-Studio</p>
-          </div>
-          <div className="flex flex-row items-center justify-center pr-6">
-            <HeaderDesktop>
-              <p>Accueil</p>
-              <p>Réalisations</p>
-              <p>A propos</p>
-            </HeaderDesktop>
-            <BtnHeader>
-              <a
-                href="#"
-                className="text-xs font-semibold flex flex-row items-center"
-              >
-                Contactez-nous!
-                <Image
-                  src={"/icone-whatsapp-bleu.svg"}
-                  alt="Icone What's App"
-                  width={20}
-                  height={20}
-                  loading="lazy"
-                  className="ml-2"
-                />
-              </a>
-            </BtnHeader>
-            <HeaderMobile>
-              <Image
-                src={"/icone-menu-header.svg"}
-                alt="Icone menu du header version mobile"
-                width={24}
-                height={24}
-                loading="lazy"
-                onClick={() => setMenuClicked(!menuClicked)}
-              />
-            </HeaderMobile>
-          </div>
-        </div>
-        {menuClicked ? (
-          <div className="max-w-screen-xl flex flex-col absolute z-20 rounded-b-3xl bg-primoblue inset-x-0 -bottom-48 animate-down shadow-lg dark:shadow-none">
-            <a className="mx-auto my-5 text-slate-300" href="#">
-              Accueil
-            </a>
-            <a className="mx-auto my-5 text-slate-300" href="#">
-              Réalisations
-            </a>
-            <a className="mx-auto my-5 text-slate-300" href="#">
-              A propos
-            </a>
-          </div>
-        ) : (
-          <div className="max-w-screen-xl flex flex-col absolute z-20 rounded-b-3xl bg-primoblue inset-x-0 -translate-y-full animate-up">
-            <a className="mx-auto my-5 text-slate-300" href="#">
-              Accueil
-            </a>
-            <a className="mx-auto my-5 text-slate-300" href="#">
-              Réalisations
-            </a>
-            <a className="mx-auto my-5 text-slate-300" href="#">
-              A propos
-            </a>
-          </div>
-        )}
-      </nav>
-      {/* --------------------------------------BODY----------------------------------------------------- */}
+      <Header />
       <div className="w-auto max-w-screen-xl mx-auto">
         <Presentation className="pt-20">
           <PresentationImg>
@@ -318,139 +249,9 @@ export default function Home(props) {
           </BlueLine>
         </div>
 
-        <Swiper
-          modules={[Autoplay]}
-          autoplay={{
-            delay: 2000,
-            disableOnInteraction: false,
-          }}
-          allowTouchMove={false}
-          slidesPerView={2}
-          spaceBetween={20}
-          loop={true}
-          className="mb-12"
-        >
-          <SwiperSlide className="mx-auto">
-            <div className="w-auto border border-black">
-              <div className="w-[250px] h-[250px] mx-auto bg-blue-500" />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide className="mx-4">
-            <div className="w-auto border border-black">
-              <div className="w-[250px] h-[250px] mx-auto bg-blue-500" />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide className="mx-4">
-            <div className="w-auto border border-black">
-              <div className="w-[250px] h-[250px] mx-auto bg-blue-500" />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide className="mx-4">
-            <div className="w-auto border border-black">
-              <div className="w-[250px] h-[250px] mx-auto bg-blue-500" />
-            </div>
-          </SwiperSlide>
-        </Swiper>
+        <CardRealisation reals={reals} />
       </div>
-      {/* ----------------------------------------------------FOOTER---------------------------------------------- */}
-      <Footer>
-        <FootUp className="max-w-screen-xl mx-auto dark:bg-slate-600">
-          <div>
-            <SocialMedia>
-              <Image
-                src={"/icone-whatsapp.svg"}
-                alt="icone What's App"
-                width={24}
-                height={24}
-                loading="lazy"
-              />
-              <Image
-                src={"/icone-instagram.svg"}
-                alt="icone What's App"
-                width={24}
-                height={24}
-                loading="lazy"
-              />
-              <Image
-                src={"/icone-facebook.svg"}
-                alt="icone What's App"
-                width={24}
-                height={24}
-                loading="lazy"
-              />
-            </SocialMedia>
-
-            <div className="w-fit mx-auto my-2">
-              <p className="text-center">On discute ?</p>
-              <FootBtn>Contactez-nous</FootBtn>
-            </div>
-
-            <div className="flex flex-col mx-auto w-fit">
-              <DivContact>
-                <Image
-                  src={"/icone-mail.svg"}
-                  alt=""
-                  width={24}
-                  height={24}
-                  loading="lazy"
-                />
-                <p>contact@primo-studio.fr</p>
-              </DivContact>
-              <DivContact>
-                <Image
-                  src={"/icone-whatsapp.svg"}
-                  alt=""
-                  width={24}
-                  height={24}
-                  loading="lazy"
-                />
-                <p>+594 694 22 47 17</p>
-              </DivContact>
-              <DivContact>
-                <Image
-                  src={"/icone-location.svg"}
-                  alt=""
-                  width={24}
-                  height={24}
-                  loading="lazy"
-                />
-                <div className="flex flex-col">
-                  <p>5 Allée des Belimbis,</p>
-                  <p>97320 Saint-Laurent du Maroni</p>
-                </div>
-              </DivContact>
-              <DivContact>
-                <Image
-                  src={"/icone-siret.svg"}
-                  alt=""
-                  width={24}
-                  height={24}
-                  loading="lazy"
-                />
-                <p>913190484 00018</p>
-              </DivContact>
-            </div>
-          </div>
-
-          <FootLink>
-            <div>
-              <a href="#">Accueil du site web</a>
-            </div>
-            <div>
-              <a href="#">A propos de l'agence web</a>
-            </div>
-            <div>
-              <a href="#">Réalisations Primo studio</a>
-            </div>
-            <div></div>
-          </FootLink>
-        </FootUp>
-        <FootDown className="max-w-screen-xl mx-auto">
-          <p className="mx-auto mt-6 mb-3">2022 All Right Reserved</p>
-          <p className="mx-auto mt-3 mb-6">Utilisation des cookies</p>
-          <p className="mx-auto mt-3 mb-6">Mention légales</p>
-        </FootDown>
-      </Footer>
+      <Footer />
     </div>
   );
 }
