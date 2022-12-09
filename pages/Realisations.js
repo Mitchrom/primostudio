@@ -37,6 +37,7 @@ const Realisations = (props) => {
   const reals = data.allRealisations;
   useEffect(() => {
     console.log(reals);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 const CardRealisation = ({ reals }) => {
   useEffect(() => {
     console.log(reals);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div className="flex flex-row wrap">
