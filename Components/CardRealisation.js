@@ -6,7 +6,7 @@ const CardRealisation = ({ reals }) => {
     console.log(reals);
   }, []);
   return (
-    <div>
+    <div className="flex flex-row wrap">
       {reals.map((real, i) => (
         <div
           key={i}

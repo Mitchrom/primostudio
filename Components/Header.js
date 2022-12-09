@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { BtnHeader } from "./Buttons";
@@ -44,9 +45,9 @@ const Header = () => {
         </div>
         <div className="flex flex-row items-center justify-center pr-6">
           <HeaderDesktop>
-            <p>Accueil</p>
-            <p>Réalisations</p>
-            <p>A propos</p>
+            <Link href={"/"}>Accueil</Link>
+            <Link href={"/Realisations"}>Réalisations</Link>
+            <Link href={"/About"}>A propos</Link>
           </HeaderDesktop>
           <BtnHeader>
             <a
@@ -77,28 +78,28 @@ const Header = () => {
         </div>
       </div>
       {menuClicked ? (
-        <div className="max-w-screen-xl flex flex-col absolute z-20 rounded-b-3xl bg-primoblue inset-x-0 -bottom-48 animate-down shadow-lg dark:shadow-none">
-          <a className="mx-auto my-5 text-slate-300" href="#">
+        <div className="max-w-screen-xl h-40 flex flex-col justify-evenly items-center absolute z-20 rounded-b-3xl bg-primoblue inset-x-0 -bottom-40 animate-down shadow-lg dark:shadow-none">
+          <Link className="text-white" href={"/"}>
             Accueil
-          </a>
-          <a className="mx-auto my-5 text-slate-300" href="#">
+          </Link>
+          <Link className="text-white" href={"/Realisations"}>
             Réalisations
-          </a>
-          <a className="mx-auto my-5 text-slate-300" href="#">
+          </Link>
+          <Link className="text-white" href={"/About"}>
             A propos
-          </a>
+          </Link>
         </div>
       ) : (
-        <div className="max-w-screen-xl flex flex-col absolute z-20 rounded-b-3xl bg-primoblue inset-x-0 -translate-y-full animate-up">
-          <a className="mx-auto my-5 text-slate-300" href="#">
+        <div className="max-w-screen-xl h-40 flex flex-col justify-evenly items-center absolute z-20 rounded-b-3xl bg-primoblue inset-x-0 -translate-y-full animate-up">
+          <Link className="text-white" href={"/"}>
             Accueil
-          </a>
-          <a className="mx-auto my-5 text-slate-300" href="#">
+          </Link>
+          <Link className="text-white" href={"/Realisations"}>
             Réalisations
-          </a>
-          <a className="mx-auto my-5 text-slate-300" href="#">
+          </Link>
+          <Link className="text-white" href={"/About"}>
             A propos
-          </a>
+          </Link>
         </div>
       )}
     </nav>
