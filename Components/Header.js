@@ -31,7 +31,7 @@ const Header = () => {
   const [menuClicked, setMenuClicked] = useState(false);
 
   return (
-    <nav className="flex flex-row justify-center bg-slate-50 dark:bg-slate-600 shadow-lg dark:shadow-none w-full fixed z-10 h-[70px] ">
+    <div className="flex flex-row justify-center bg-slate-50 dark:bg-slate-600 shadow-lg dark:shadow-none w-full fixed z-10 h-[70px] ">
       <div className="max-w-screen-xl flex flex-row justify-between w-full z-30 bg-slate-50 dark:bg-slate-600">
         <div className="flex flex-row items-center pl-6">
           <Image
@@ -102,7 +102,7 @@ const Header = () => {
           </Link>
         </div>
       )}
-    </nav>
+    </div>
   );
 };
 
